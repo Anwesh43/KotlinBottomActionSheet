@@ -22,7 +22,7 @@ class ActionSheetAnimator(var actionSheet:ActionSheet):AnimatorListenerAdapter()
         endAnim.duration = 500
     }
     override fun onAnimationUpdate(vf:ValueAnimator) {
-        var factor = vf.animatedFraction
+        var factor = vf.animatedValue as Float
         actionSheet.update(factor)
     }
     override fun onAnimationEnd(animator:Animator) {
@@ -41,6 +41,7 @@ class ActionSheetAnimator(var actionSheet:ActionSheet):AnimatorListenerAdapter()
                 0 -> startAnim.start()
                 1 -> endAnim.start()
             }
+            animated = true
         }
     }
 }

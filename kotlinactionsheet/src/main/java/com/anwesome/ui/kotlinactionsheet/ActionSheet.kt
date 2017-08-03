@@ -1,5 +1,6 @@
 package com.anwesome.ui.kotlinactionsheet
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Point
 import android.hardware.display.DisplayManager
@@ -11,15 +12,17 @@ import android.view.ViewGroup
 class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
     var actionButton:ActionSheetButtonView?=null
     var animator = ActionSheetAnimator(this)
-    var totalH = 0
     init {
         getDimension(ctx)
         actionButton = ActionSheetButtonView(ctx)
         addView(actionButton, LayoutParams(dw/10,dw/10))
     }
+    fun addMenu() {
+
+    }
     fun update(factor:Float) {
         actionButton?.update(factor)
-        actionButton?.setY(9*dh/10-totalH*factor)
+        setPosY(factor)
     }
     private fun getDimension(ctx:Context) {
         var displayManager = ctx.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
@@ -29,13 +32,11 @@ class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
         dw = size.x
         dh = size.y
     }
+    fun setPosY(scale:Float) {
+        y = ((0.88f*dh - dw/10)-(measuredHeight-dw/10)*scale)
+    }
     override fun onLayout(reloaded:Boolean,a:Int,b:Int,w:Int,h:Int) {
-        var th = 0
-        if(childCount>0) {
-            var child = getChildAt(0)
-            th = child.measuredHeight
-        }
-        var y = 9*dh/10 - th
+        var y = 0
         for(i in 0..childCount-1) {
             var child = getChildAt(i)
             if(i == 0) {
@@ -48,12 +49,25 @@ class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
         }
     }
     override fun onMeasure(wspec:Int,hspec:Int) {
-        totalH = 0
+        var totalH = 0
         for(i in 0..childCount-1) {
             var child = getChildAt(i)
             measureChild(child,wspec,hspec)
             totalH+=child.height
         }
         setMeasuredDimension(dw,totalH)
+    }
+    companion object {
+        var sheet:ActionSheet?=null
+        fun create(activity:Activity) {
+            sheet = ActionSheet(activity)
+        }
+        fun addMenu() {
+
+        }
+        fun addToParent(activity: Activity) {
+            activity.addContentView(sheet, LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT))
+            sheet?.setPosY(0.0f)
+        }
     }
 }

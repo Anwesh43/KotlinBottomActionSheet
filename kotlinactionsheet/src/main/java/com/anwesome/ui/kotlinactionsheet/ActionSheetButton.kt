@@ -15,7 +15,7 @@ class ActionSheetButtonView(ctx:Context):View(ctx) {
     var scale:Float = 0.0f
     val renderer = Renderer(this)
     override fun onDraw(canvas:Canvas) {
-        renderer.render(canvas,paint,0.0f)
+        renderer.render(canvas,paint,scale)
     }
     fun update(scale:Float) {
         this.scale = scale
@@ -48,7 +48,7 @@ class ActionSheetButtonView(ctx:Context):View(ctx) {
        fun draw(canvas:Canvas,paint:Paint,scale:Float) {
            canvas.save()
            canvas.translate(x,y)
-           canvas.rotate(90.0f)
+           canvas.rotate(45.0f*scale)
            paint.color = Color.GRAY
            canvas.drawCircle(0.0f,0.0f,r,paint)
            paint.color = Color.WHITE
