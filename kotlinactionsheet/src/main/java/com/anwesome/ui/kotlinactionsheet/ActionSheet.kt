@@ -18,7 +18,7 @@ class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
         var size = Point()
         display?.getRealSize(size)
         dw = size.x
-        dh = size.y 
+        dh = size.y
     }
     override fun onLayout(reloaded:Boolean,a:Int,b:Int,w:Int,h:Int) {
         var th = 0
