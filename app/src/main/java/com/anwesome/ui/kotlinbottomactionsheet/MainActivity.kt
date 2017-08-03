@@ -9,6 +9,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ActionSheet.create(this)
+        var txtMsgs = arrayOf("Add","Delete","Sort","Search")
+        txtMsgs.forEach {
+            ActionSheet.addMenu(it)
+        }
         ActionSheet.addToParent(this)
     }
 }
