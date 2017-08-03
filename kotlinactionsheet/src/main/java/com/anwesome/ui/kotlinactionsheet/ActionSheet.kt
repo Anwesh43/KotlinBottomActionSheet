@@ -9,8 +9,17 @@ import android.view.ViewGroup
  * Created by anweshmishra on 03/08/17.
  */
 class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
+    var actionButton:ActionSheetButtonView?=null
+    var animator = ActionSheetAnimator(this)
+    var totalH = 0
     init {
         getDimension(ctx)
+        actionButton = ActionSheetButtonView(ctx)
+        addView(actionButton, LayoutParams(dw/10,dw/10))
+    }
+    fun update(factor:Float) {
+        actionButton?.update(factor)
+        actionButton?.setY(9*dh/10-totalH*factor)
     }
     private fun getDimension(ctx:Context) {
         var displayManager = ctx.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
@@ -39,7 +48,7 @@ class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
         }
     }
     override fun onMeasure(wspec:Int,hspec:Int) {
-        var totalH = 0
+        totalH = 0
         for(i in 0..childCount-1) {
             var child = getChildAt(i)
             measureChild(child,wspec,hspec)

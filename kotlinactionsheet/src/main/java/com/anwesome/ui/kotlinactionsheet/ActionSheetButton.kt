@@ -40,7 +40,8 @@ class ActionSheetButtonView(ctx:Context):View(ctx) {
             time++
         }
         fun handleTap() {
-
+            var parent =  v.parent as ActionSheet
+            parent.animator.start()
         }
     }
    data class ActionSheetButton(var x:Float,var y:Float,var r:Float) {
