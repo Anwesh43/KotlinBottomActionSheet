@@ -37,7 +37,7 @@ class ActionSheetList(ctx:Context):ViewGroup(ctx) {
     }
     fun addMenu(text:String,w:Int,h:Int) {
         var menu = ActionSheetMenu(context,text)
-        addView(menu,LayoutParams(w,h))
+        addView(menu, LayoutParams(w,h))
     }
     class ActionSheetMenu(ctx:Context,var text:String,var scale:Float = 0.0f):View(ctx) {
         var animator = MenuAnimator(this)
@@ -51,8 +51,8 @@ class ActionSheetList(ctx:Context):ViewGroup(ctx) {
             paint.textSize = w/20
             canvas.drawText(text,w/2-paint.measureText(text)/2,h/2,paint)
             canvas.save()
-            canvas.scale(scale,scale)
             canvas.translate(w/2,h/2)
+            canvas.scale(scale,scale)
             paint.color = Color.argb(150,0,0,0)
             canvas.drawRect(-w/2,-h/2,w/2,h/2,paint)
             canvas.restore()
@@ -72,8 +72,8 @@ class ActionSheetList(ctx:Context):ViewGroup(ctx) {
             return true
         }
         class MenuAnimator(var v:ActionSheetMenu):AnimatorListenerAdapter(),ValueAnimator.AnimatorUpdateListener {
-            var endAnim = ValueAnimator.ofFloat(0.0f,1.0f)
-            var startAnim = ValueAnimator.ofFloat(1.0f,0.0f)
+            var startAnim = ValueAnimator.ofFloat(0.0f,1.0f)
+            var endAnim = ValueAnimator.ofFloat(1.0f,0.0f)
             var dir = 0
             var animated = false
             init {

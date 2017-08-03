@@ -11,14 +11,16 @@ import android.view.ViewGroup
  */
 class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
     var actionButton:ActionSheetButtonView?=null
+    var actionSheetList:ActionSheetList?=null
     var animator = ActionSheetAnimator(this)
     init {
         getDimension(ctx)
         actionButton = ActionSheetButtonView(ctx)
+        actionSheetList = ActionSheetList(ctx)
         addView(actionButton, LayoutParams(dw/10,dw/10))
     }
-    fun addMenu() {
-
+    fun addMenu(text:String) {
+        actionSheetList?.addMenu(text,dw,dh/12)
     }
     fun update(factor:Float) {
         actionButton?.update(factor)
@@ -48,6 +50,9 @@ class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
             y+=child.measuredHeight
         }
     }
+    fun addListToLayout() {
+        addView(actionSheetList, LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT))
+    }
     override fun onMeasure(wspec:Int,hspec:Int) {
         var totalH = 0
         for(i in 0..childCount-1) {
@@ -62,10 +67,11 @@ class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
         fun create(activity:Activity) {
             sheet = ActionSheet(activity)
         }
-        fun addMenu() {
-
+        fun addMenu(text:String) {
+            sheet?.addMenu(text)
         }
         fun addToParent(activity: Activity) {
+            sheet?.addListToLayout()
             activity.addContentView(sheet, LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT))
             sheet?.setPosY(0.0f)
         }
