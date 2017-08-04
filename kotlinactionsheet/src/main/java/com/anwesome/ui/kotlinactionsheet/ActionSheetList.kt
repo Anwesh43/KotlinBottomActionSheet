@@ -52,6 +52,9 @@ class ActionSheetList(ctx:Context):ViewGroup(ctx) {
             paint.color = Color.WHITE
             paint.textSize = w/20
             canvas.drawText(text,w/2-paint.measureText(text)/2,h/2,paint)
+            paint.strokeWidth = paint.textSize/5
+            val lineX = w/8
+            canvas.drawLine(lineX,h/2+paint.textSize,w-lineX,h/2+paint.textSize,paint)
             canvas.save()
             canvas.translate(w/2,h/2)
             canvas.scale(scale,scale)
@@ -83,8 +86,8 @@ class ActionSheetList(ctx:Context):ViewGroup(ctx) {
                 startAnim.addUpdateListener(this)
                 endAnim.addListener(this)
                 startAnim.addListener(this)
-                endAnim.duration = 500
-                startAnim.duration = 500
+                endAnim.duration = 200
+                startAnim.duration = 200
             }
             override fun onAnimationUpdate(vf:ValueAnimator) {
                 v.update(vf.animatedValue as Float)
