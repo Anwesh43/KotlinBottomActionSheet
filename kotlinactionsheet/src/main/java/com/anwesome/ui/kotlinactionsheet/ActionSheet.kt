@@ -19,8 +19,8 @@ class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
         actionSheetList = ActionSheetList(ctx)
         addView(actionButton, LayoutParams(dw/10,dw/10))
     }
-    fun addMenu(text:String) {
-        actionSheetList?.addMenu(text,dw,dh/12)
+    fun addMenu(text:String,onActionItemClickListener: OnActionItemClickListener) {
+        actionSheetList?.addMenu(text,onActionItemClickListener,dw,dh/12)
     }
     fun update(factor:Float) {
         actionButton?.update(factor)
@@ -67,8 +67,8 @@ class ActionSheet(ctx:Context,var dw:Int = 0,var dh:Int = 0):ViewGroup(ctx) {
         fun create(activity:Activity) {
             sheet = ActionSheet(activity)
         }
-        fun addMenu(text:String) {
-            sheet?.addMenu(text)
+        fun addMenu(text:String,onActionItemClickListener: OnActionItemClickListener) {
+            sheet?.addMenu(text,onActionItemClickListener)
         }
         fun addToParent(activity: Activity) {
             sheet?.addListToLayout()

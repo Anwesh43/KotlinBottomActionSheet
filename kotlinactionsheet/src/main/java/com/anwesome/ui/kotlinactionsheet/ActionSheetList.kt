@@ -35,12 +35,14 @@ class ActionSheetList(ctx:Context):ViewGroup(ctx) {
         }
         setMeasuredDimension(w,totalH)
     }
-    fun addMenu(text:String,w:Int,h:Int) {
+    fun addMenu(text:String,onItemClickListener:OnActionItemClickListener,w:Int,h:Int) {
         var menu = ActionSheetMenu(context,text)
+        menu.onItemClickListener = onItemClickListener
         addView(menu, LayoutParams(w,h))
     }
     class ActionSheetMenu(ctx:Context,var text:String,var scale:Float = 0.0f):View(ctx) {
         var animator = MenuAnimator(this)
+        var onItemClickListener:OnActionItemClickListener?=null
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
         override fun onDraw(canvas:Canvas) {
             var w = canvas.width.toFloat()
@@ -97,6 +99,7 @@ class ActionSheetList(ctx:Context):ViewGroup(ctx) {
                         1 -> {
                             dir = 0
                             animated = false
+                            v.onItemClickListener?.onClick()
                         }
                     }
                 }
@@ -109,4 +112,7 @@ class ActionSheetList(ctx:Context):ViewGroup(ctx) {
             }
         }
     }
+}
+interface OnActionItemClickListener {
+    fun onClick()
 }
